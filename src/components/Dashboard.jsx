@@ -34,6 +34,13 @@ export default function Dashboard() {
     }
   }
 
+  const handleLogout = async () => {
+    const result = await logout()
+    if (!result.success) {
+      console.error("Logout failed:", result.error)
+    }
+  }
+
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
       const matchesSearch =
@@ -67,9 +74,27 @@ export default function Dashboard() {
               <h1 className="text-2xl font-bold text-gray-900">User Dashboard</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-700">Welcome, {user?.name}</span>
+              <div className="flex items-center space-x-3">
+                {user?.photoURL ? (
+                  <img
+                    className="h-8 w-8 rounded-full"
+                    src={user.photoURL || "/placeholder.svg"}
+                    alt={user.displayName}
+                  />
+                ) : (
+                  <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
+                    <span className="text-sm font-medium text-white">
+                      {user?.displayName?.charAt(0)?.toUpperCase() || "U"}
+                    </span>
+                  </div>
+                )}
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-900">{user?.displayName}</span>
+                  <span className="text-xs text-gray-500">{user?.email}</span>
+                </div>
+              </div>
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Logout

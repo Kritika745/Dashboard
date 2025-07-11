@@ -1,4 +1,4 @@
-// Mock API functions - replace with real API calls
+// Mock API functions 
 export const fetchUsers = async () => {
   // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 1000))
